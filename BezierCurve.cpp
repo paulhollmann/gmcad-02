@@ -20,11 +20,25 @@ std::pair<BezierCurve, BezierCurve> BezierCurve::separateCurveAt(const float t)
 	
 	// TODO: implement the de Casteljau algorithm and create two separated bezier curves with the new control points.
 	// ==========================================================================================================
-	
-	
+	int n = this->controlPoints.size();
+	std::vector<Vec3f> currentCps = this->controlPoints;
+	for (int i = 0; i < n; i++) {
+		cps1.push_back(currentCps.front());
+		cps2.push_back(currentCps.back());
+		std::vector<Vec3f> bufferCps;
+		for (int j = 0; j < currentCps.size()-1; j++)
+		{
+			//std::cout << (1 - t) * currentCps.at(j) + t * currentCps.at(j + 1) << std::endl;
+			bufferCps.push_back((1 - t) * currentCps.at(j) + t * currentCps.at(j + 1));
+		}
+		currentCps = bufferCps;
+		
+	}
 	// ==========================================================================================================
 	BezierCurve curve1(cps1, rational);
 	BezierCurve curve2(cps2, rational);
+	//std::cout << "split a:" << cps1;
+	//std::cout << "split b:" << cps2;
 	return std::pair<BezierCurve, BezierCurve>(curve1, curve2);
 }
 // evaluates the bezier curve at u=t, returns that point and calculates its tangent
@@ -34,7 +48,20 @@ Vec3f BezierCurve::evaluateCurveAt(const float t, Vec3f &tangent)
 	// TODO: implement the evaluation of the bezier curve and the tangent at t.
 	// Note: use the seperateCurveAt(t) function.
 	// ==========================================================================================================
+	//std::cout << "base: " << base << std::endl;
+	std::pair<BezierCurve, BezierCurve> split = separateCurveAt(t);
+	BezierCurve bezierCurveA = split.first;
+	BezierCurve bezierCurveB = split.second;
+	Vec3f pointDiff = bezierCurveA.getControlPoints().back() - bezierCurveB.getControlPoints().back();
+	Vec3f tangentA = bezierCurveA.getControlPoints().back() - (bezierCurveA.getControlPoints().at(bezierCurveA.getControlPoints().size() - 2));
+	Vec3f tangentB = bezierCurveB.getControlPoints().back() - (bezierCurveB.getControlPoints().at(bezierCurveB.getControlPoints().size() - 2));
+	Vec3f tangentDiff = tangentA - tangentB;
 
+	if (pointDiff.length() < 0.0001f)
+		point = bezierCurveA.getControlPoints().back();
+
+	if (tangentDiff.length() < 0.0001f)
+		tangent = tangentA;
 
 	// ==========================================================================================================
 	return point;
@@ -42,17 +69,22 @@ Vec3f BezierCurve::evaluateCurveAt(const float t, Vec3f &tangent)
 
 std::pair<std::vector<Vec3f>, std::vector<Vec3f>> BezierCurve::evaluateCurve(const size_t numberSamples)
 {
+	int _numberSamples = numberSamples;
+	if (numberSamples < 2) _numberSamples = 2;
 	std::vector<Vec3f> points;
-	points.reserve(numberSamples);
+	points.reserve(_numberSamples);
 	std::vector<Vec3f> tangents;
-	tangents.reserve(numberSamples);
+	tangents.reserve(_numberSamples);
 	// TODO: implement evaluation of the bezier curve at 'numberSamples' equidistant points
 	// Note: use the 'evaluateCurveAt' function. 
 	// ==========================================================================================================
-
-
+	for (int i = 0; i < _numberSamples; i++) {
+		float t =  i / (_numberSamples - 1.0f);
+		Vec3f tangent;
+		points.push_back(evaluateCurveAt(t, tangent));
+		tangents.push_back(tangent);
+	}
 	// ==========================================================================================================
-
 	return std::make_pair(points,tangents);
 }
 

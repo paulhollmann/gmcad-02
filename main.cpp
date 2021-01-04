@@ -86,6 +86,13 @@ void createCurves()
 	// TODO: create at least one bezier and one degree 2 quarter circle rational bezier curve
 	// ==========================================================================
 
+	std::vector<Vec3f> pts;
+	pts.push_back(Vec3f(1.0f, 1.0f, 1.0f));
+	pts.push_back(Vec3f(2.0f, 2.0f, 2.0f));
+	pts.push_back(Vec3f(3.0f, 1.0f, 1.0f));
+	pts.push_back(Vec3f(3.0f, 0.0f, 2.0f));
+
+	bezierCurves.push_back(BezierCurve(pts, false));
 
 	// ==========================================================================
 	for (auto &b : bezierCurves)

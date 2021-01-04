@@ -6,14 +6,25 @@
 #include <BezierCurve.h>
 #include <NURBSCurve.h>
 #include <algorithm>
+#include <iostream>	
 
 
 void drawBezier(BezierCurve &bezierCurve, Vec3f color)
 {
 	// TODO: implement the visualization of the 3D bezier curve (e.g. with GL_LINE_STRIP)
 	// ===============================================================================
-
-
+	std::pair<std::vector<Vec3f>, std::vector<Vec3f>> samples = bezierCurve.evaluateCurve(15);
+	std::vector<Vec3f> points = samples.first;
+	std::vector<Vec3f> tangents = samples.second;
+	
+	glColor3f(color.x, color.y, color.z);
+	glBegin(GL_LINE_STRIP);
+	for (int i = 0; i < points.size(); i++)
+	{
+		glVertex3f(points.at(i).x, points.at(i).y, points.at(i).z);
+	}
+	glEnd();
+	
 	// ===============================================================================
 }
 void drawBezierCtrlPolygon(const BezierCurve &bezierCurve, Vec3f color)
@@ -22,6 +33,16 @@ void drawBezierCtrlPolygon(const BezierCurve &bezierCurve, Vec3f color)
 	// ===============================================================================
 	// cps of the complete curve
 
+	std::vector<Vec3f> points = bezierCurve.getControlPoints();
+	glColor3f(color.x, color.y, color.z);
+	
+	glBegin(GL_LINE_STRIP);
+	for (int i = 0; i < points.size(); i++)
+	{
+		glVertex3f(points.at(i).x, points.at(i).y, points.at(i).z);
+	}
+
+	glEnd();
 
 	// ===============================================================================
 }
@@ -90,7 +111,7 @@ void drawNURBSCtrlPolygon_H(const NURBSCurve &nurbsCurve, Vec3f color)
 
 void renderBezier(BezierCurve &bezierCurve)
 {
-	auto pointsAndTangents = bezierCurve.evaluateCurve(size_t(100));
+	//auto pointsAndTangents = bezierCurve.evaluateCurve(size_t(100));
 	bool rational = bezierCurve.isRational();
 	Vec3f color = Vec3f(0.0f, 1.0f, 1.0f);
 	if (bezierCurve.isRational())
