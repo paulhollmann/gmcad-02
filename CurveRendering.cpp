@@ -13,7 +13,7 @@ void drawBezier(BezierCurve &bezierCurve, Vec3f color)
 {
 	// TODO: implement the visualization of the 3D bezier curve (e.g. with GL_LINE_STRIP)
 	// ===============================================================================
-	std::pair<std::vector<Vec3f>, std::vector<Vec3f>> samples = bezierCurve.evaluateCurve(15);
+	std::pair<std::vector<Vec3f>, std::vector<Vec3f>> samples = bezierCurve.evaluateCurve(50);
 	std::vector<Vec3f> points = samples.first;
 	std::vector<Vec3f> tangents = samples.second;
 	

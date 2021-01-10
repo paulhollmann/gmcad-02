@@ -90,8 +90,8 @@ void createCurves()
 	pts.push_back(Vec3f(1.0f, 1.0f, 1.0f));
 	pts.push_back(Vec3f(2.0f, 2.0f, 2.0f));
 	pts.push_back(Vec3f(3.0f, 1.0f, 1.0f));
-	pts.push_back(Vec3f(3.0f, 0.0f, 2.0f));
-
+	pts.push_back(Vec3f(3.0f, 0.0f, 2.0f)); 
+	pts.push_back(Vec3f(1.0f, 1.0f, 1.0f));
 	bezierCurves.push_back(BezierCurve(pts, false));
 
 	// ==========================================================================
