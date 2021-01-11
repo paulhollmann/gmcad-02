@@ -35,6 +35,7 @@ std::pair<BezierCurve, BezierCurve> BezierCurve::separateCurveAt(const float t)
 	}
 	// ==========================================================================================================
 	BezierCurve curve1(cps1, rational);
+	std::reverse(cps2.begin(), cps2.end());
 	BezierCurve curve2(cps2, rational);
 	//std::cout << "split a:" << cps1;
 	//std::cout << "split b:" << cps2;
@@ -51,9 +52,9 @@ Vec3f BezierCurve::evaluateCurveAt(const float t, Vec3f &tangent)
 	std::pair<BezierCurve, BezierCurve> split = separateCurveAt(t);
 	BezierCurve bezierCurveA = split.first;
 	BezierCurve bezierCurveB = split.second;
-	Vec3f pointDiff = bezierCurveA.getControlPoints().back() - bezierCurveB.getControlPoints().back();
-	Vec3f tangentA = bezierCurveA.getControlPoints().back() - (bezierCurveA.getControlPoints().at(bezierCurveA.getControlPoints().size() - 2));
-	Vec3f tangentB = bezierCurveB.getControlPoints().back() - (bezierCurveB.getControlPoints().at(bezierCurveB.getControlPoints().size() - 2));
+	Vec3f pointDiff = bezierCurveA.getControlPoints().back() - bezierCurveB.getControlPoints().front();
+	Vec3f tangentA = bezierCurveA.getControlPoints().back() - bezierCurveA.getControlPoints().at(bezierCurveA.getControlPoints().size() - 2);
+	Vec3f tangentB = bezierCurveB.getControlPoints().front() - bezierCurveB.getControlPoints().at(1);
 	Vec3f tangentDiff = tangentA - tangentB;
 
 	if (pointDiff.length() < 0.0001f)

@@ -87,12 +87,12 @@ void createCurves()
 	// ==========================================================================
 
 	std::vector<Vec3f> pts;
+	pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
 	pts.push_back(Vec3f(1.0f, 1.0f, 1.0f));
-	pts.push_back(Vec3f(2.0f, 2.0f, 2.0f));
-	pts.push_back(Vec3f(3.0f, 1.0f, 1.0f));
-	pts.push_back(Vec3f(3.0f, 0.0f, 2.0f)); 
-	pts.push_back(Vec3f(1.0f, 1.0f, 1.0f));
-	bezierCurves.push_back(BezierCurve(pts, false));
+	pts.push_back(Vec3f(0.0f, 2.0f, 2.0f));
+	//pts.push_back(Vec3f(3.0f, 0.0f, 2.0f)); 
+	//pts.push_back(Vec3f(1.0f, 1.0f, 1.0f));
+	bezierCurves.push_back(BezierCurve(pts, true));
 
 	// ==========================================================================
 	for (auto &b : bezierCurves)
