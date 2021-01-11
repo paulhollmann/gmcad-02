@@ -87,12 +87,45 @@ void createCurves()
 	// ==========================================================================
 
 	std::vector<Vec3f> pts;
-	pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
-	pts.push_back(Vec3f(1.0f, 1.0f, 1.0f));
-	pts.push_back(Vec3f(0.0f, 2.0f, 2.0f));
-	//pts.push_back(Vec3f(3.0f, 0.0f, 2.0f)); 
-	//pts.push_back(Vec3f(1.0f, 1.0f, 1.0f));
-	bezierCurves.push_back(BezierCurve(pts, true));
+
+	int i = 3;
+	bool rational = false;
+
+	switch (i) {
+	case 0:
+		// Parabel rationale Bezierkurve
+		pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
+		pts.push_back(Vec3f(0.0f, 0.0f, 0.5f));
+		pts.push_back(Vec3f(0.0f, 1.0f, 1.0f));
+		rational = true;
+		break;
+
+	case 1:
+		// Halbkreis rationale Bezierkurve
+		pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
+		pts.push_back(Vec3f(1.0f, 1.0f, 1.0f));
+		pts.push_back(Vec3f(0.0f, 2.0f, 2.0f));
+		rational = true;
+		break;
+
+	case 2:
+		// 2. Grad Viertelkreis rationale Bezierkurve
+		pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
+		pts.push_back(Vec3f(0.0f, 1.0f, 0.0f));
+		pts.push_back(Vec3f(-1.0f, 0.0f, 1.0f));
+		rational = true;
+		break;
+
+	case 3:
+		// anderes Beispiel Bezierkurve
+		pts.push_back(Vec3f(1.0f, 1.0f, 1.0f));
+		pts.push_back(Vec3f(2.0f, 2.0f, 2.0f));
+		pts.push_back(Vec3f(3.0f, 1.0f, 1.0f));
+		pts.push_back(Vec3f(3.0f, 0.0f, 2.0f));
+		break;
+	}
+
+	bezierCurves.push_back(BezierCurve(pts, rational));
 
 	// ==========================================================================
 	for (auto &b : bezierCurves)
