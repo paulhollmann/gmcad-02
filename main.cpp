@@ -21,6 +21,7 @@
 
 #include <CurveRendering.h>
 
+
 // ==============
 // === BASICS ===
 // ==============
@@ -82,64 +83,55 @@ void initializeGL()
 
 void createCurves()
 {
+	activeBezier = 0;
 	bezierCurves.clear();
 	// TODO: create at least one bezier and one degree 2 quarter circle rational bezier curve
 	// ==========================================================================
 
 	std::vector<Vec3f> pts;
 
-	int i = 5;
-	bool rational = false;
+	// einfaches Beispiel Bezierkurve
+	pts.push_back(Vec3f(1.0f, 1.0f, 1.0f));
+	pts.push_back(Vec3f(2.0f, 2.0f, 2.0f));
+	pts.push_back(Vec3f(3.0f, 1.0f, 1.0f));
+	pts.push_back(Vec3f(3.0f, 0.0f, 2.0f));
+	bezierCurves.push_back(BezierCurve(pts, false));
+	pts.clear();
 
-	switch (i) {
-	case 0:
-		// einfaches Beispiel Bezierkurve
-		pts.push_back(Vec3f(1.0f, 1.0f, 1.0f));
-		pts.push_back(Vec3f(2.0f, 2.0f, 2.0f));
-		pts.push_back(Vec3f(3.0f, 1.0f, 1.0f));
-		pts.push_back(Vec3f(3.0f, 0.0f, 2.0f));
-		break;
+	// Parabel quadratische Bezierkurve
+	pts.push_back(Vec3f(1.0f, 0.0f, 0.0f));
+	pts.push_back(Vec3f(0.0f, 0.0f, 0.0f));
+	pts.push_back(Vec3f(0.0f, 1.0f, 0.0f));
+	bezierCurves.push_back(BezierCurve(pts, false));
+	pts.clear();
 
-	case 1:
-		// Parabel quadratische Bezierkurve
-		pts.push_back(Vec3f(1.0f, 0.0f, 0.0f));
-		pts.push_back(Vec3f(0.0f, 0.0f, 0.0f));
-		pts.push_back(Vec3f(0.0f, 1.0f, 0.0f));
-		break;
+	// Halbkreis rationale Bezierkurve
+	pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
+	pts.push_back(Vec3f(1.0f, 1.0f, 1.0f));
+	pts.push_back(Vec3f(0.0f, 2.0f, 2.0f));
+	bezierCurves.push_back(BezierCurve(pts, true));
+	pts.clear();
 
-	case 2:
-		// Halbkreis rationale Bezierkurve
-		pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
-		pts.push_back(Vec3f(1.0f, 1.0f, 1.0f));
-		pts.push_back(Vec3f(0.0f, 2.0f, 2.0f));
-		rational = true;
-		break;
+	// Viertelkreis 2. Grad rationale Bezierkurve
+	pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
+	pts.push_back(Vec3f(0.0f, 1.0f, 0.0f));
+	pts.push_back(Vec3f(-1.0f, 0.0f, 1.0f));
+	bezierCurves.push_back(BezierCurve(pts, true));
+	pts.clear();
 
-	case 3:
-		// Viertelkreis 2. Grad rationale Bezierkurve
-		pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
-		pts.push_back(Vec3f(0.0f, 1.0f, 0.0f));
-		pts.push_back(Vec3f(-1.0f, 0.0f, 1.0f));
-		rational = true;
-		break;
+	// Ellipse rationale Bezierkurve
+	pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
+	pts.push_back(Vec3f(0.0f, 0.0f, 0.5f));
+	pts.push_back(Vec3f(0.0f, 1.0f, 1.0f));
+	bezierCurves.push_back(BezierCurve(pts, true));
+	pts.clear();
 
-	case 4:
-		// Ellipse rationale Bezierkurve
-		pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
-		pts.push_back(Vec3f(0.0f, 0.0f, 0.5f));
-		pts.push_back(Vec3f(0.0f, 1.0f, 1.0f));
-		rational = true;
-		break;
-	case 5:
-		// Hyperbel rationale Bezierkurve
-		pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
-		pts.push_back(Vec3f(0.0f, 0.0f, 2.0f));
-		pts.push_back(Vec3f(0.0f, 1.0f, 1.0f));
-		rational = true;
-		break;
-	}
-
-	bezierCurves.push_back(BezierCurve(pts, rational));
+	// Hyperbel rationale Bezierkurve
+	pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
+	pts.push_back(Vec3f(0.0f, 0.0f, 2.0f));
+	pts.push_back(Vec3f(0.0f, 1.0f, 1.0f));
+	bezierCurves.push_back(BezierCurve(pts, true));
+	pts.clear();
 
 	// ==========================================================================
 	for (auto &b : bezierCurves)
@@ -228,6 +220,7 @@ void renderScene()
 
 void keyPressed(unsigned char key, int x, int y)
 {
+	std::cout << key << std::endl;
 	switch(key)
 	{
 	// esc => exit
@@ -249,7 +242,27 @@ void keyPressed(unsigned char key, int x, int y)
 	// like changing the active Bbezier/NURBS curve (activeNURBS, activeBezier)
 	// and varying the evaluation parameter (evalParameter) for the bezier curve
 	// ==========================================================================
+	case 'n' :
+	case 'N':
+		selectNextCurve();
+		glutPostRedisplay();
+		break;
+	case 'p':
+	case 'P':
+		selectPrevCurve();
+		glutPostRedisplay();
+		break;
 
+	case '>':
+		shiftEvalRight();
+		std::cout << evalParameter << std::endl;
+		glutPostRedisplay();
+		break;
+	case '<':
+		shiftEvalLeft();
+		std::cout << evalParameter << std::endl;
+		glutPostRedisplay();
+		break;
 
 	// ==========================================================================
 	}
@@ -309,4 +322,35 @@ void coutHelp()
 	// ================================================
 	std::cout << "==========================" << std::endl;
 	std::cout << std::endl;
+}
+
+void selectNextCurve()
+{
+	activeBezier++;
+	if (activeBezier == bezierCurves.size()) 
+	{
+		activeBezier--;
+	}
+}
+
+
+
+void selectPrevCurve()
+{
+	if (activeBezier > 0)
+	{
+		activeBezier--;
+	}
+}
+
+void shiftEvalRight()
+{
+	evalParameter += 0.1;
+	if(evalParameter > 1) evalParameter = 1;
+}
+
+void shiftEvalLeft()
+{
+	evalParameter -= 0.1;
+	if (evalParameter < 0) evalParameter = 0;
 }

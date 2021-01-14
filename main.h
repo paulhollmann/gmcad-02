@@ -76,3 +76,11 @@ void mouseMoved(int x, int y);
 // ===============
 
 void coutHelp();
+
+void selectNextCurve();
+
+void selectPrevCurve();
+
+void shiftEvalRight();
+
+void shiftEvalLeft();
