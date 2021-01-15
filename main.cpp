@@ -141,17 +141,15 @@ void createCurves()
 	// TODO: set values to describe a degree 2 quarter circle in first quadrant, XY-plane
 	// ==================================================================================
 	std::vector<Vec4f> npts;
-	switch (i) {
-	case 6:
-		npts.push_back(Vec4f(0.0f, 0.0f, 0.0f, 1.70f));
-		npts.push_back(Vec4f(0.0f, 1.0f, 1.0f, 1.0f));
-		npts.push_back(Vec4f(0.0f, 2.0f, 1.0f, 1.0f));
-		npts.push_back(Vec4f(0.0f, 3.0f, 0.0f, 1.20f));
-		npts.push_back(Vec4f(0.0f, 2.0f, -1.0f, 1.0f));
-		npts.push_back(Vec4f(0.0f, 1.0f, -1.0f, 1.0f));
-		npts.push_back(Vec4f(0.0f, 0.0f, 0.0f, 1.90f));
-		break;
-	}
+	npts.push_back(Vec4f(0.0f, 0.0f, 0.0f, 1.70f));
+	npts.push_back(Vec4f(0.0f, 1.0f, 1.0f, 1.0f));
+	npts.push_back(Vec4f(0.0f, 2.0f, 1.0f, 1.0f));
+	npts.push_back(Vec4f(0.0f, 3.0f, 0.0f, 1.20f));
+	npts.push_back(Vec4f(0.0f, 2.0f, -1.0f, 1.0f));
+	npts.push_back(Vec4f(0.0f, 1.0f, -1.0f, 1.0f));
+	npts.push_back(Vec4f(0.0f, 0.0f, 0.0f, 1.90f));
+		
+	
 	
 		nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.0, 0.25, 0.5, 0.75, 1.0, 1.0, 1.0, 1.0}, 3));
 		//nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0,0.0,0.0,0.0,0.1,0.6241,0.9,1.0,1.0,1.0,1.0},3));
