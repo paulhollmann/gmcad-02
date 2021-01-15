@@ -56,35 +56,35 @@ Vec4f NURBSCurve::insertKnot(const float newKnot)
 	k -= 1;
 
 	//std::cout << "t " << newKnot << std::endl;
-	std::vector<Vec4f> d{};
-	d.reserve(p);
+	std::vector<Vec4f> tempContolPoints{};
+	tempContolPoints.reserve(p);
 	for (int j = 0; j <= degree; j++) {
-		d.push_back(controlPoints.at(j + k - degree));
+		tempContolPoints.push_back(controlPoints.at(j + k - degree));
 	}
 	
+	// one for loop to much??
 	for (int r = 1; r <= degree; r++) {
 		for (int j = degree; j >=r ; j--) {
 			alpha = calculateAlpha(newKnot, degree, r, j, k);
-			Vec4f p1 = d.at(j);
-			Vec4f p2 = d.at(j - 1);
+			Vec4f p1 = tempContolPoints.at(j);
+			Vec4f p2 = tempContolPoints.at(j - 1.0f);
 
-			double x1 = alpha * p1.x;
-			double y1 = alpha * p1.y;
-			double z1 = alpha * p1.z;
-			double w1 = alpha * p1.w;
+			Vec4f vec1 = p1 * alpha;
+			Vec4f vec2 = p2 * (1.0f - alpha);
 
-			double x2 = (1.0 - alpha) * p2.x;
-			double y2 = (1.0 - alpha) * p2.y;
-			double z2 = (1.0 - alpha) * p2.z;
-			double w2 = (1.0 - alpha) * p2.w;
-
-			Vec4f res = Vec4f(x1 + x2, y1 + y2, z1 + z2, w1 + w2);
-			d.at(j) = res;
+			Vec4f res = vec1 + vec2;
+			tempContolPoints.at(j) = res;
 		}
 	}
+
+	// all done save the new points and knot vector
+
+	//controlPoints = tempContolPoints;
+	//knotVector = ...
+
 	// =====================================================
 	
-	return d.at(degree);
+	return tempContolPoints.at(degree);
 
 }
 
@@ -99,7 +99,8 @@ Vec4f NURBSCurve::evaluteDeBoor(const float t, Vec4f& tangent)
 	Vec4f point;
 	// TODO: use insertKnot to evaluate the curve and its tangent. Take care to NOT modify this NURBS curve. Instead use the temporary copy.
 	// =====================================================================================================================================
-	point = insertKnot(t);
+	point = tempNURBS.insertKnot(t);
+
 	
 	// =====================================================================================================================================
 	return point;

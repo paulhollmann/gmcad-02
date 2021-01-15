@@ -133,6 +133,9 @@ void createCurves()
 	bezierCurves.push_back(BezierCurve(pts, true));
 	pts.clear();
 
+	bezierCurves.clear(); // !!!!
+
+
 	// ==========================================================================
 	for (auto &b : bezierCurves)
 		std::cout << b << std::endl;
@@ -231,7 +234,6 @@ void renderScene()
 
 void keyPressed(unsigned char key, int x, int y)
 {
-	std::cout << key << std::endl;
 	switch(key)
 	{
 	// esc => exit
@@ -266,12 +268,10 @@ void keyPressed(unsigned char key, int x, int y)
 
 	case '>':
 		shiftEvalRight();
-		std::cout << evalParameter << std::endl;
 		glutPostRedisplay();
 		break;
 	case '<':
 		shiftEvalLeft();
-		std::cout << evalParameter << std::endl;
 		glutPostRedisplay();
 		break;
 
