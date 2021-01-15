@@ -98,7 +98,17 @@ void drawNURBS(NURBSCurve &nurbsCurve, Vec3f color)
 	// TODO: draw NURBS curve
 	// NOT homogenized
 	// ===================================================================================
+	std::pair<std::vector<Vec4f>, std::vector<Vec4f>> samples = nurbsCurve.evaluateCurve(50);
+	std::vector<Vec4f> points = samples.first;
+	std::vector<Vec4f> tangents = samples.second;
 
+	glColor3f(color.x, color.y, color.z);
+	glBegin(GL_LINE_STRIP);
+	for (int i = 0; i < points.size(); i++)
+	{
+		glVertex3f(points.at(i).x, points.at(i).y, points.at(i).z);
+	}
+	glEnd();
 
 	// ===================================================================================
 }
@@ -107,7 +117,19 @@ void drawNURBS_H(NURBSCurve &nurbsCurve, Vec3f color)
 	// TODO: draw NURBS curve
 	// homogenized
 	// ===================================================================================
+	std::pair<std::vector<Vec4f>, std::vector<Vec4f>> samples = nurbsCurve.evaluateCurve(50);
+	std::vector<Vec4f> points = samples.first;
+	std::vector<Vec4f> tangents = samples.second;
 
+	glColor3f(color.x, color.y, color.z);
+	glBegin(GL_LINE_STRIP);
+	for (int i = 0; i < points.size(); i++)
+	{
+		Vec4f point = points.at(i);
+		point /= point.w;
+		glVertex3f(point.x, point.y, point.z);
+	}
+	glEnd();
 
 	// ===================================================================================
 }
@@ -117,7 +139,17 @@ void drawNURBSCtrlPolygon(const NURBSCurve &nurbsCurve, Vec3f color)
 	// NOT homogenized 
 	// NURBS' control polygon (e.g. with GL_LINE_STRIP)
 	// =========================================================================================================
+	std::vector<Vec4f> points = nurbsCurve.getControlPoints();
+	glColor3f(color.x, color.y, color.z);
 
+	glBegin(GL_LINE_STRIP);
+	for (int i = 0; i < points.size(); i++)
+	{
+		Vec4f point = points.at(i);
+		glVertex3f(point.x, point.y, point.z);
+	}
+
+	glEnd();
 
 	// =========================================================================================================
 }
@@ -127,7 +159,18 @@ void drawNURBSCtrlPolygon_H(const NURBSCurve &nurbsCurve, Vec3f color)
 	// homogenized 
 	// NURBS' control polygon (e.g. with GL_LINE_STRIP)
 	// =========================================================================================================
+	std::vector<Vec4f> points = nurbsCurve.getControlPoints();
+	glColor3f(color.x, color.y, color.z);
 
+	glBegin(GL_LINE_STRIP);
+	for (int i = 0; i < points.size(); i++)
+	{
+		Vec4f point = points.at(i);
+		point /= point.w;
+		glVertex3f(point.x, point.y, point.z);
+	}
+
+	glEnd();
 
 	// =========================================================================================================
 }

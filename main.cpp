@@ -3,7 +3,7 @@
 // mailto:felix.schuwirth@igd.fraunhofer.de                                  //
 //                                                                           //
 // GRIS - Graphisch Interaktive Systeme                                      //
-// Technische Universität Darmstadt                                          //
+// Technische Universitï¿½t Darmstadt                                          //
 // Fraunhoferstrasse 5                                                       //
 // D-64283 Darmstadt, Germany                                                //
 //                                                                           //
@@ -140,8 +140,21 @@ void createCurves()
 	nurbsCurves.clear();
 	// TODO: set values to describe a degree 2 quarter circle in first quadrant, XY-plane
 	// ==================================================================================
-
-
+	std::vector<Vec4f> npts;
+	switch (i) {
+	case 6:
+		npts.push_back(Vec4f(0.0f, 0.0f, 0.0f, 1.70f));
+		npts.push_back(Vec4f(0.0f, 1.0f, 1.0f, 1.0f));
+		npts.push_back(Vec4f(0.0f, 2.0f, 1.0f, 1.0f));
+		npts.push_back(Vec4f(0.0f, 3.0f, 0.0f, 1.20f));
+		npts.push_back(Vec4f(0.0f, 2.0f, -1.0f, 1.0f));
+		npts.push_back(Vec4f(0.0f, 1.0f, -1.0f, 1.0f));
+		npts.push_back(Vec4f(0.0f, 0.0f, 0.0f, 1.90f));
+		break;
+	}
+	
+		nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.0, 0.25, 0.5, 0.75, 1.0, 1.0, 1.0, 1.0}, 3));
+		//nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0,0.0,0.0,0.0,0.1,0.6241,0.9,1.0,1.0,1.0,1.0},3));
 	// ==================================================================================
 	for (auto &n : nurbsCurves)
 		std::cout << n << std::endl;
@@ -277,7 +290,7 @@ void mousePressed(int button, int state, int x, int y)
 
 void mouseMoved(int x, int y)
 {
-	// rotate (cap angleY within [-85°, +85°])
+	// rotate (cap angleY within [-85ï¿½, +85ï¿½])
 	if(mouseButton == GLUT_LEFT_BUTTON)
 	{
 		angleX = fmod(angleX + (x - mouseX) * mouseSensitivy, 360.0f);
