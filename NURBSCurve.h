@@ -20,7 +20,10 @@ public:
 	// insert a knot with deBoor algorithm. returns false, if newKnot is not within begin and end parameter.
 	Vec4f insertKnot(const float newKnot);
 
+	
+
 	// calculate the alpha which is needed for deBoor algortihm
+	float calculateAlpha(const float ubar, const int p, const int i, const int k);
 	float calculateAlpha(const float newKnot, int p, int r, int i, int k);
 
 	// evaluate the curve at parameter t with deBoor (inserting a knot until its multiplicity is p). also returns the tangent at the evaluated point.

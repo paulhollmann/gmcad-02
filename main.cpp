@@ -356,12 +356,12 @@ void selectPrevCurve()
 
 void shiftEvalRight()
 {
-	evalParameter += 0.1;
-	if(evalParameter > 1) evalParameter = 1;
+	evalParameter += 0.1f;
+	if(evalParameter > 1) evalParameter = 1.0f;
 }
 
 void shiftEvalLeft()
 {
-	evalParameter -= 0.1;
-	if (evalParameter < 0) evalParameter = 0;
+	evalParameter -= 0.1f;
+	if (evalParameter < 0) evalParameter = 0.0f;
 }
