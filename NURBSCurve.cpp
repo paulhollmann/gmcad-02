@@ -100,7 +100,7 @@ Vec4f NURBSCurve::evaluteDeBoor(const float t, Vec4f& tangent)
 {
 	// create a copy of this NURBS curve
 	NURBSCurve tempNURBS(*this);
-	Vec4f point;
+	
 	// TODO: use insertKnot to evaluate the curve and its tangent. Take care to NOT modify this NURBS curve. Instead use the temporary copy.
 	// =====================================================================================================================================
 
@@ -113,16 +113,18 @@ Vec4f NURBSCurve::evaluteDeBoor(const float t, Vec4f& tangent)
 	for (unsigned int i = 0; i < tempNURBS.getDegree(); i++)
 		pos = tempNURBS.insertKnot(t);
 
-	point = tempNURBS.controlPoints.at(pos);
-	Vec4f tangentL = point - tempNURBS.controlPoints.at(pos - 1);
-	Vec4f tangentR = tempNURBS.controlPoints.at(pos + 1) - point;
-	tangentL.normalize();
-	tangentR.normalize();
+	const Vec4f point = tempNURBS.controlPoints.at(pos);
+	const Vec4f pointL = tempNURBS.controlPoints.at(pos - 1);
+	//const Vec4f pointR = tempNURBS.controlPoints.at(pos + 1);
+	const Vec4f tangentL = point/point.w - pointL/pointL.w;
+	//const Vec4f tangentR = pointR - point;
+	//tangentL.normalize();
+	//tangentR.normalize();
 	
 	//if ((tangentL - tangentR).length() > 0.001) std::cout << "tangents are not correct!" << std::endl;
 	//else tangent = tangentL;
 	tangent = tangentL;
-	tangent.w = 1;
+	tangent.w = point.w/pointL.w;
 	
 	// =====================================================================================================================================
 	return point;
