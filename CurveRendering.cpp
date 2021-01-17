@@ -8,6 +8,8 @@
 #include <algorithm>
 #include <iostream>	
 
+#define EVALNR 25
+
 
 void drawBezier(BezierCurve &bezierCurve, Vec3f color)
 {
@@ -52,7 +54,7 @@ void drawRationalBezier(BezierCurve &bezierCurve, Vec3f color)
 	{
 		// TODO: implement the visualization of the 2D rational bezier curve in the plane w=1 (e.g. with GL_LINE_STRIP)
 		// ===============================================================================
-		std::pair<std::vector<Vec3f>, std::vector<Vec3f>> samples = bezierCurve.evaluateCurve(50);
+		std::pair<std::vector<Vec3f>, std::vector<Vec3f>> samples = bezierCurve.evaluateCurve(EVALNR);
 		std::vector<Vec3f> points = samples.first;
 		std::vector<Vec3f> tangents = samples.second;
 
@@ -98,7 +100,7 @@ void drawNURBS(NURBSCurve &nurbsCurve, Vec3f color)
 	// TODO: draw NURBS curve
 	// NOT homogenized
 	// ===================================================================================
-	std::pair<std::vector<Vec4f>, std::vector<Vec4f>> samples = nurbsCurve.evaluateCurve(50);
+	std::pair<std::vector<Vec4f>, std::vector<Vec4f>> samples = nurbsCurve.evaluateCurve(EVALNR);
 	std::vector<Vec4f> points = samples.first;
 	std::vector<Vec4f> tangents = samples.second;
 
@@ -117,7 +119,7 @@ void drawNURBS_H(NURBSCurve &nurbsCurve, Vec3f color)
 	// TODO: draw NURBS curve
 	// homogenized
 	// ===================================================================================
-	std::pair<std::vector<Vec4f>, std::vector<Vec4f>> samples = nurbsCurve.evaluateCurve(50);
+	std::pair<std::vector<Vec4f>, std::vector<Vec4f>> samples = nurbsCurve.evaluateCurve(EVALNR);
 	std::vector<Vec4f> points = samples.first;
 	std::vector<Vec4f> tangents = samples.second;
 
@@ -177,7 +179,7 @@ void drawNURBSCtrlPolygon_H(const NURBSCurve &nurbsCurve, Vec3f color)
 
 void renderBezier(BezierCurve &bezierCurve)
 {
-	//auto pointsAndTangents = bezierCurve.evaluateCurve(size_t(100));
+	//auto pointsAndTangents = bezierCurve.evaluateCurve(size_t(EVALNR));
 	bool rational = bezierCurve.isRational();
 	Vec3f color = Vec3f(0.0f, 1.0f, 1.0f);
 	if (bezierCurve.isRational())
@@ -251,7 +253,7 @@ void renderNURBSEvaluation(NURBSCurve &nurbsCurve, float t)
 	if (!nurbsCurve.isValidNURBS())
 		return;
 
-	auto pointsAndTangents = nurbsCurve.evaluateCurve(size_t(50));
+	auto pointsAndTangents = nurbsCurve.evaluateCurve(size_t(EVALNR));
 	auto points = pointsAndTangents.first;
 	auto tangents = pointsAndTangents.second;
 
