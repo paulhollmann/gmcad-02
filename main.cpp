@@ -163,12 +163,10 @@ void createCurves()
 
 
 	npts.push_back(Vec4f(0.0f, 0.0f, 0.0f, 1.0f));
-
 	npts.push_back(Vec4f(1.0f, 1.0f, 0.0f, 1.0f));
-
 	npts.push_back(Vec4f(2.0f, 0.0f, 0.0f, 1.0f));
-
 	npts.push_back(Vec4f(3.0f, 3.0f, 0.0f, 1.0f));
+
 	NURBSCurve nurbs1 = NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0}, 2);
 	std::cout << nurbs1 << std::endl;
 	nurbsCurves.push_back(nurbs1);
@@ -183,6 +181,31 @@ void createCurves()
 	nurbs2.insertKnot(0.75);
 	nurbs2.insertKnot(0.75);
 	nurbsCurves.push_back(nurbs2);
+
+	nurbsCurves.clear(); // !!!!!!!
+	npts.clear(); // !!!!!!!
+
+	npts.push_back(Vec4f(0.0f, 0.0f, 0.0f, 2.0f));
+	npts.push_back(Vec4f(1.0f, 1.0f, 0.0f, 3.0f));
+	npts.push_back(Vec4f(2.0f, 0.0f, 0.0f, 4.0f));
+	npts.push_back(Vec4f(3.0f, 3.0f, 0.0f, 2.0f));
+
+	nurbs1 = NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0}, 2);
+	std::cout << nurbs1 << std::endl;
+	nurbsCurves.push_back(nurbs1);
+
+	npts.clear();
+
+	npts.push_back(Vec4f(0.0f, 0.0f, 4.0f, 2.0f));
+	npts.push_back(Vec4f(1.0f, 1.0f, 4.0f, 3.0f));
+	npts.push_back(Vec4f(2.0f, 0.0f, 4.0f, 4.0f));
+	npts.push_back(Vec4f(3.0f, 3.0f, 4.0f, 2.0f));
+
+	nurbs2 = NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0}, 2);
+	nurbs2.insertKnot(0.75);
+	nurbs2.insertKnot(0.75);
+	nurbsCurves.push_back(nurbs2);
+
 
 	std::cout << nurbs2 << std::endl;
 
