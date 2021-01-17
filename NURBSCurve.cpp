@@ -41,38 +41,38 @@ bool NURBSCurve::isValidNURBS()
 
 Vec4f NURBSCurve::insertKnot(const float newKnot)
 {
-	unsigned int k = 0; // index of the first knot vector element smaller than newKnot
+	unsigned int k = 0; // index of the first knot vector element smaller/equal then/to newKnot
 	unsigned int s = 0; // number of knot vector elements at same position
 	float alpha;
-	const size_t p = degree-1;
+	const size_t p = degree-0;
 
-	while (newKnot > knotVector.at(k))
+	while (newKnot >= knotVector.at(k))
 	{
-		k += 1;
+		k++;
+		if (newKnot == knotVector.at(k)) s++;
 	}
-	while (newKnot == knotVector.at(k + s)) {
-		s += 1;
-	}
-	k -= 1;
+	k--;
 
 	//std::cout<< "ubar" << newKnot << " at " << k << " -> " << knotVector.at(k) << std::endl;
 
-	std::vector<Vec4f>(Q); //the new control points
+	std::vector<Vec4f>(Q); // the new control points
 	Q.reserve(controlPoints.size() + 1);
 
-	for (unsigned int i = 0; i <= k - p + s; i++) Q.push_back( controlPoints.at(i));
-	for (unsigned int i = k - p + 1 + s; i <= k + s; i++) 
+	// take the the old knots and compute p new konts
+	for (unsigned int i = 0; i < k - p + 1 ; i++) Q.push_back( controlPoints.at(i));
+	for (unsigned int i = k - p + 1; i < k + 1; i++) 
 	{
 		float alpha = calculateAlpha(newKnot, p, i, k);
 		Q.push_back(alpha * controlPoints.at(i) + (1 - alpha) * controlPoints.at(i-1));
 	}
-	for (unsigned int i = k + 1 + s; i < controlPoints.size() + 1; i++) Q.push_back(controlPoints.at(i-1));
+	for (unsigned int i = k + 1; i < controlPoints.size() + 1; i++) Q.push_back(controlPoints.at(i-1));
 
 
-	std::vector<float>(U);
+	std::vector<float>(U); // the new knotVector
 	U.reserve(knotVector.size() + 1);
 
-	for (unsigned int i = 0; i <= k; i++) U.push_back(knotVector.at(i));
+	// take the old one and put newKont at pos k
+	for (unsigned int i = 0; i < k + 1; i++) U.push_back(knotVector.at(i));
 	U.push_back(newKnot);
 	for (unsigned int i = k + 1; i < knotVector.size(); i++) U.push_back(knotVector.at(i));
 
@@ -84,9 +84,8 @@ Vec4f NURBSCurve::insertKnot(const float newKnot)
 	knotVector = U;
 
 	// =====================================================
-	if (k + s  >= Q.size())
-		return Q.back();
-	return Q.at(k+s);
+
+	return Q.at(k-1);
 
 }
 
