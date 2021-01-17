@@ -154,8 +154,38 @@ void createCurves()
 		
 	
 	
-		nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.0, 0.25, 0.5, 0.75, 1.0, 1.0, 1.0, 1.0}, 3));
-		//nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0,0.0,0.0,0.0,0.1,0.6241,0.9,1.0,1.0,1.0,1.0},3));
+	nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.0, 0.25, 0.5, 0.75, 1.0, 1.0, 1.0, 1.0}, 3));
+	//nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0,0.0,0.0,0.0,0.1,0.6241,0.9,1.0,1.0,1.0,1.0},3));
+
+
+	nurbsCurves.clear(); // !!!!!!!
+	npts.clear(); // !!!!!!!
+
+
+	npts.push_back(Vec4f(0.0f, 0.0f, 0.0f, 1.0f));
+
+	npts.push_back(Vec4f(1.0f, 1.0f, 0.0f, 1.0f));
+
+	npts.push_back(Vec4f(2.0f, 0.0f, 0.0f, 1.0f));
+
+	npts.push_back(Vec4f(3.0f, 3.0f, 0.0f, 1.0f));
+	NURBSCurve nurbs1 = NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0}, 2);
+	std::cout << nurbs1 << std::endl;
+	nurbsCurves.push_back(nurbs1);
+
+	npts.clear();
+
+	npts.push_back(Vec4f(0.0f, 0.0f, 4.0f, 1.0f));
+	npts.push_back(Vec4f(1.0f, 1.0f, 4.0f, 1.0f));
+	npts.push_back(Vec4f(2.0f, 0.0f, 4.0f, 1.0f));
+	npts.push_back(Vec4f(3.0f, 3.0f, 4.0f, 1.0f));
+	NURBSCurve nurbs2 = NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0}, 2);
+	nurbs2.insertKnot(0.75);
+	nurbs2.insertKnot(0.75);
+	nurbsCurves.push_back(nurbs2);
+
+	std::cout << nurbs2 << std::endl;
+
 	// ==================================================================================
 	for (auto &n : nurbsCurves)
 		std::cout << n << std::endl;
@@ -338,9 +368,11 @@ void coutHelp()
 void selectNextCurve()
 {
 	activeBezier++;
+	activeNURBS++;
 	if (activeBezier == bezierCurves.size()) 
 	{
 		activeBezier--;
+		activeNURBS--;
 	}
 }
 
@@ -351,6 +383,7 @@ void selectPrevCurve()
 	if (activeBezier > 0)
 	{
 		activeBezier--;
+		activeNURBS--;
 	}
 }
 
