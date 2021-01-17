@@ -16,15 +16,11 @@ public:
 	// constructor which takes given control points P, knot vector U and degree p
 	NURBSCurve(const std::vector<Vec4f>& controlPoints_, const std::vector<float>& knotVector_, const unsigned int degree_);
 
-
 	// insert a knot with deBoor algorithm. returns false, if newKnot is not within begin and end parameter.
-	Vec4f insertKnot(const float newKnot);
-
-	
+	size_t insertKnot(const float newKnot);
 
 	// calculate the alpha which is needed for deBoor algortihm
-	float calculateAlpha(const float ubar, const int p, const int i, const int k);
-	float calculateAlpha(const float newKnot, int p, int r, int i, int k);
+	float calculateAlpha(const float ubar, const size_t p, const size_t i, const size_t k);
 
 	// evaluate the curve at parameter t with deBoor (inserting a knot until its multiplicity is p). also returns the tangent at the evaluated point.
 	Vec4f evaluteDeBoor(const float t, Vec4f& tangent);

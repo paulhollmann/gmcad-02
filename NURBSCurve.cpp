@@ -39,12 +39,11 @@ bool NURBSCurve::isValidNURBS()
 }
 
 
-Vec4f NURBSCurve::insertKnot(const float newKnot)
+size_t NURBSCurve::insertKnot(const float newKnot)
 {
-	unsigned int k = 0; // index of the first knot vector element smaller/equal then/to newKnot
-	unsigned int s = 0; // number of knot vector elements at same position
-	float alpha;
-	const size_t p = degree-0;
+	size_t k = 0; // index of the first knot vector element smaller/equal then/to newKnot
+	size_t s = 0; // number of knot vector elements at same position
+	const unsigned int p = degree;
 
 	while (newKnot >= knotVector.at(k))
 	{
@@ -85,19 +84,17 @@ Vec4f NURBSCurve::insertKnot(const float newKnot)
 
 	// =====================================================
 
-	return Q.at(k-1);
+
+	// return the position of the new knot
+	return k-1;
 
 }
 
-float NURBSCurve::calculateAlpha(const float ubar, const int p, const int i, const int k) {
+float NURBSCurve::calculateAlpha(const float ubar, const size_t p, const size_t i, const size_t k) {
 
 	return (ubar - knotVector.at(i)) / (knotVector.at(i + p) - knotVector.at(i));
 }
 
-/*
-float NURBSCurve::calculateAlpha(const float newKnot, int p, int r, int j, int k) {
-	return (newKnot - knotVector.at(j + k - p)) / (knotVector.at(j + 1 + k - r) - knotVector.at(j + k - p));
-}*/
 
 Vec4f NURBSCurve::evaluteDeBoor(const float t, Vec4f& tangent)
 {
@@ -108,14 +105,25 @@ Vec4f NURBSCurve::evaluteDeBoor(const float t, Vec4f& tangent)
 	// =====================================================================================================================================
 
 	// insert a point the degree
-	if (t == 1) return tempNURBS.controlPoints.back();
-	if (t == 0) return tempNURBS.controlPoints.front();
+	//if (t == 1) return tempNURBS.controlPoints.back();
+	//if (t == 0) return tempNURBS.controlPoints.front();
+
+	size_t pos;
 
 	for (unsigned int i = 0; i < tempNURBS.getDegree(); i++)
-		point = tempNURBS.insertKnot(t);
+		pos = tempNURBS.insertKnot(t);
 
-	//std::cout << tempNURBS;
-	//point = Vec4f(0, 0, 0, 1);
+	point = tempNURBS.controlPoints.at(pos);
+	Vec4f tangentL = point - tempNURBS.controlPoints.at(pos - 1);
+	Vec4f tangentR = tempNURBS.controlPoints.at(pos + 1) - point;
+	tangentL.normalize();
+	tangentR.normalize();
+	
+	//if ((tangentL - tangentR).length() > 0.001) std::cout << "tangents are not correct!" << std::endl;
+	//else tangent = tangentL;
+	tangent = tangentL;
+	tangent.w = 1;
+	
 	// =====================================================================================================================================
 	return point;
 }
