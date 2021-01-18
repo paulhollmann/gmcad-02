@@ -133,7 +133,7 @@ void createCurves()
 	bezierCurves.push_back(BezierCurve(pts, true));
 	pts.clear();
 
-	bezierCurves.clear(); // !!!!
+	//bezierCurves.clear(); // !!!!
 
 
 	// ==========================================================================
@@ -143,6 +143,8 @@ void createCurves()
 	nurbsCurves.clear();
 	// TODO: set values to describe a degree 2 quarter circle in first quadrant, XY-plane
 	// ==================================================================================
+
+	// Curve description
 	std::vector<Vec4f> npts;
 	npts.push_back(Vec4f(0.0f, 0.0f, 0.0f, 1.70f));
 	npts.push_back(Vec4f(0.0f, 1.0f, 1.0f, 1.0f));
@@ -151,67 +153,24 @@ void createCurves()
 	npts.push_back(Vec4f(0.0f, 2.0f, -1.0f, 1.0f));
 	npts.push_back(Vec4f(0.0f, 1.0f, -1.0f, 1.0f));
 	npts.push_back(Vec4f(0.0f, 0.0f, 0.0f, 1.90f));
-		
-	
-	
 	nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.0, 0.25, 0.5, 0.75, 1.0, 1.0, 1.0, 1.0}, 3));
-	//nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0,0.0,0.0,0.0,0.1,0.6241,0.9,1.0,1.0,1.0,1.0},3));
-
-
-	nurbsCurves.clear(); // !!!!!!!
-	npts.clear(); // !!!!!!!
-
-
-	npts.push_back(Vec4f(0.0f, 0.0f, 0.0f, 1.0f));
-	npts.push_back(Vec4f(1.0f, 1.0f, 0.0f, 1.0f));
-	npts.push_back(Vec4f(2.0f, 0.0f, 0.0f, 1.0f));
-	npts.push_back(Vec4f(3.0f, 3.0f, 0.0f, 1.0f));
-
-	NURBSCurve nurbs1 = NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0}, 2);
-	std::cout << nurbs1 << std::endl;
-	nurbsCurves.push_back(nurbs1);
-
 	npts.clear();
 
-	npts.push_back(Vec4f(0.0f, 0.0f, 4.0f, 1.0f));
-	npts.push_back(Vec4f(1.0f, 1.0f, 4.0f, 1.0f));
-	npts.push_back(Vec4f(2.0f, 0.0f, 4.0f, 1.0f));
-	npts.push_back(Vec4f(3.0f, 3.0f, 4.0f, 1.0f));
-	NURBSCurve nurbs2 = NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0}, 2);
-	nurbs2.insertKnot(0.75);
-	nurbs2.insertKnot(0.75);
-	nurbsCurves.push_back(nurbs2);
 
-	nurbsCurves.clear(); // !!!!!!!
-	npts.clear(); // !!!!!!!
-
-	npts.push_back(Vec4f(0.0f, 0.0f, 0.0f, 2.0f));
-	npts.push_back(Vec4f(1.0f, 1.0f, 0.0f, 3.0f));
-	npts.push_back(Vec4f(2.0f, 0.0f, 0.0f, 4.0f));
-	npts.push_back(Vec4f(3.0f, 3.0f, 0.0f, 2.0f));
-
-	nurbs1 = NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0}, 2);
-	std::cout << nurbs1 << std::endl;
-	nurbsCurves.push_back(nurbs1);
-
-	npts.clear();
-
+	// Curve description
 	npts.push_back(Vec4f(0.0f, 0.0f, 4.0f, 2.0f));
 	npts.push_back(Vec4f(1.0f, 1.0f, 4.0f, 3.0f));
 	npts.push_back(Vec4f(2.0f, 0.0f, 4.0f, 4.0f));
 	npts.push_back(Vec4f(3.0f, 3.0f, 4.0f, 2.0f));
+	nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0}, 2));
+	npts.clear();
 
-	nurbs2 = NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0}, 2);
-	nurbs2.insertKnot(0.75);
-	nurbs2.insertKnot(0.75);
-	nurbsCurves.push_back(nurbs2);
-
-
-	std::cout << nurbs2 << std::endl;
 
 	// ==================================================================================
 	for (auto &n : nurbsCurves)
 		std::cout << n << std::endl;
+
+	if (bezierCurves.size() > 0) activeNURBS = -1;
 }
 
 void reshape(GLint width, GLint height)
@@ -327,6 +286,12 @@ void keyPressed(unsigned char key, int x, int y)
 		shiftEvalLeft();
 		glutPostRedisplay();
 		break;
+	case 's':
+	case 'S':
+		splitNurbs();
+		glutPostRedisplay();
+		break;
+
 
 	// ==========================================================================
 	}
@@ -390,24 +355,18 @@ void coutHelp()
 
 void selectNextCurve()
 {
-	activeBezier++;
-	activeNURBS++;
-	if (activeBezier == bezierCurves.size()) 
-	{
-		activeBezier--;
-		activeNURBS--;
-	}
+	if (activeBezier < bezierCurves.size()) activeBezier++;
+	if (activeBezier == bezierCurves.size()) activeNURBS++;
+	if (activeNURBS == nurbsCurves.size()) activeNURBS--;
 }
 
 
 
 void selectPrevCurve()
 {
-	if (activeBezier > 0)
-	{
-		activeBezier--;
-		activeNURBS--;
-	}
+	if (activeNURBS >= 0) activeNURBS--;
+	if (activeNURBS == -1) activeBezier--;
+	if (activeBezier < 0) activeBezier = 0;
 }
 
 void shiftEvalRight()
@@ -420,4 +379,10 @@ void shiftEvalLeft()
 {
 	evalParameter -= 0.1f;
 	if (evalParameter < 0) evalParameter = 0.0f;
+}
+
+void splitNurbs()
+{
+	if (activeNURBS < 0) return;
+	nurbsCurves.at(activeNURBS).insertKnot(evalParameter);
 }

@@ -86,7 +86,7 @@ size_t NURBSCurve::insertKnot(const float newKnot)
 
 
 	// return the position of the new knot
-	return k-1;
+	return k-(p-1);
 
 }
 
@@ -105,7 +105,7 @@ Vec4f NURBSCurve::evaluteDeBoor(const float t, Vec4f& tangent)
 	// =====================================================================================================================================
 
 	// insert a point the degree
-	//if (t == 1) return tempNURBS.controlPoints.back();
+	if (t == 1) return tempNURBS.controlPoints.back();
 	//if (t == 0) return tempNURBS.controlPoints.front();
 
 	size_t pos;
@@ -144,7 +144,7 @@ std::pair<std::vector<Vec4f>, std::vector<Vec4f>> NURBSCurve::evaluateCurve(cons
 	// Note: use the evaluteDeBoor(t) function. 
 	// ==========================================================================================================
 
-	for (int i = 0; i < _numberSamples-1; i++) {
+	for (int i = 0; i < _numberSamples; i++) {
 		float t = i * steps;
 		Vec4f tangent;
 		points.push_back(evaluteDeBoor(t, tangent));

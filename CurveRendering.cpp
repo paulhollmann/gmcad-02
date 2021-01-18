@@ -8,7 +8,7 @@
 #include <algorithm>
 #include <iostream>	
 
-#define EVALNR 25
+#define EVALNR 50
 
 
 void drawBezier(BezierCurve &bezierCurve, Vec3f color)
@@ -295,5 +295,31 @@ void renderNURBSEvaluation(NURBSCurve &nurbsCurve, float t)
 			glVertex3fv(&t.x);
 		}
 		glEnd();
+		// draw the current evalPoint
+		Vec4f tang;
+		Vec4f point = nurbsCurve.evaluteDeBoor(t, tang);
+		{
+			glPushMatrix();
+			glTranslated(point.x, point.y, point.z);
+			GLUquadricObj* quadObj;
+			quadObj = gluNewQuadric();
+			gluQuadricDrawStyle(quadObj, GLU_FILL);
+			gluQuadricNormals(quadObj, GLU_SMOOTH);
+			gluSphere(quadObj, 0.02f, 16, 16);
+			gluDeleteQuadric(quadObj);
+			glPopMatrix();
+		}
+		{
+			glPushMatrix();
+			point /= point.w;
+			glTranslated(point.x, point.y, point.z);
+			GLUquadricObj* quadObj;
+			quadObj = gluNewQuadric();
+			gluQuadricDrawStyle(quadObj, GLU_FILL);
+			gluQuadricNormals(quadObj, GLU_SMOOTH);
+			gluSphere(quadObj, 0.02f, 16, 16);
+			gluDeleteQuadric(quadObj);
+			glPopMatrix();
+		}
 	}
 }

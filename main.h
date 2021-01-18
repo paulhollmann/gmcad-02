@@ -26,8 +26,9 @@
 std::vector<BezierCurve> bezierCurves;
 std::vector<NURBSCurve> nurbsCurves;
 float evalParameter;
-unsigned int activeBezier;
-unsigned int activeNURBS;
+int activeBezier;
+int activeNURBS;
+
 
 // do not modify data below unless you know what you do
 // camera Information
@@ -84,3 +85,5 @@ void selectPrevCurve();
 void shiftEvalRight();
 
 void shiftEvalLeft();
+
+void splitNurbs();
