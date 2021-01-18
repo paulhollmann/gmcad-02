@@ -105,14 +105,11 @@ Vec4f NURBSCurve::evaluteDeBoor(const float t, Vec4f& tangent)
 	// =====================================================================================================================================
 
 	// insert a point the degree
-	if (t == 1) return tempNURBS.controlPoints.back();
-	//if (t == 0) return tempNURBS.controlPoints.front();
 
 	size_t pos;
-
-	for (unsigned int i = 0; i < tempNURBS.getDegree(); i++)
-		pos = tempNURBS.insertKnot(t);
-
+	if (t != 1.0f) for (unsigned int i = 0; i < tempNURBS.getDegree(); i++) pos = tempNURBS.insertKnot(t);
+	else pos = tempNURBS.controlPoints.size() - 1;
+	
 	const Vec4f point = tempNURBS.controlPoints.at(pos);
 	const Vec4f pointL = tempNURBS.controlPoints.at(pos - 1);
 	//const Vec4f pointR = tempNURBS.controlPoints.at(pos + 1);
