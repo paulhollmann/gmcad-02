@@ -144,25 +144,46 @@ void createCurves()
 	// TODO: set values to describe a degree 2 quarter circle in first quadrant, XY-plane
 	// ==================================================================================
 
-	// Curve description
+	// Uniforme u Parabel
 	std::vector<Vec4f> npts;
-	npts.push_back(Vec4f(0.0f, 0.0f, 0.0f, 1.70f));
-	npts.push_back(Vec4f(0.0f, 1.0f, 1.0f, 1.0f));
-	npts.push_back(Vec4f(0.0f, 2.0f, 1.0f, 1.0f));
-	npts.push_back(Vec4f(0.0f, 3.0f, 0.0f, 1.20f));
-	npts.push_back(Vec4f(0.0f, 2.0f, -1.0f, 1.0f));
+	npts.push_back(Vec4f(0.0f, 2.25f, -0.5f, 1.0f));
 	npts.push_back(Vec4f(0.0f, 1.0f, -1.0f, 1.0f));
-	npts.push_back(Vec4f(0.0f, 0.0f, 0.0f, 1.90f));
+	npts.push_back(Vec4f(0.0f, 0.25f, -1.5f, 1.0f));
+	npts.push_back(Vec4f(0.0f, 0.0f, -2.0f, 1.0f));
+	npts.push_back(Vec4f(0.0f, 0.25f, -2.5f, 1.0f));
+	npts.push_back(Vec4f(0.0f, 1.0f, -3.0f, 1.0f));
+	npts.push_back(Vec4f(0.0f, 2.25f, -3.5f, 1.0f));
 	nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.0, 0.25, 0.5, 0.75, 1.0, 1.0, 1.0, 1.0}, 3));
+	
 	npts.clear();
 
+	// Einfluss von u
+	npts.push_back(Vec4f(0.0f, 2.25f, -0.5f, 1.0f));
+	npts.push_back(Vec4f(0.0f, 1.0f, -1.0f, 1.0f));
+	npts.push_back(Vec4f(0.0f, 0.25f, -1.5f, 1.0f));
+	npts.push_back(Vec4f(0.0f, 0.0f, -2.0f, 1.0f));
+	npts.push_back(Vec4f(0.0f, 0.25f, -2.5f, 1.0f));
+	npts.push_back(Vec4f(0.0f, 1.0f, -3.0f, 1.0f));
+	npts.push_back(Vec4f(0.0f, 2.25f, -3.5f, 1.0f));
+	nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.0, 0.5, 0.5, 0.5, 1.0, 1.0, 1.0, 1.0}, 3));
+	npts.clear();
 
-	// Curve description
-	npts.push_back(Vec4f(0.0f, 0.0f, 4.0f, 2.0f));
-	npts.push_back(Vec4f(1.0f, 1.0f, 4.0f, 3.0f));
-	npts.push_back(Vec4f(2.0f, 0.0f, 4.0f, 4.0f));
-	npts.push_back(Vec4f(3.0f, 3.0f, 4.0f, 2.0f));
+	// Curve description Circle
+	npts.push_back(Vec4f(-1.0f, 0.5f, -2.0f, 1.0f));
+	npts.push_back(Vec4f(-1.0f, -0.0f, -2.10f, 1.0f));
+	npts.push_back(Vec4f(-1.0f, -0.0f, -2.90f, 1.0f));
+	npts.push_back(Vec4f(-1.0f, 0.5f, -3.0f, 1.0f));
 	nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0}, 2));
+	//nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.1, 1.0, 1.0, 1.0}, 2));
+	npts.clear();
+
+	// Curve description Circle with different weight
+	npts.push_back(Vec4f(-1.0f, 0.5f, -2.0f, 3.0f));
+	npts.push_back(Vec4f(-1.0f, -0.0f, -2.10f, 2.0f));
+	npts.push_back(Vec4f(-1.0f, -0.0f, -2.90f, 2.0f));
+	npts.push_back(Vec4f(-1.0f, 0.5f, -3.0f, 3.0f));
+	nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0}, 2));
+	
 	npts.clear();
 
 
@@ -291,6 +312,8 @@ void keyPressed(unsigned char key, int x, int y)
 		splitNurbs();
 		glutPostRedisplay();
 		break;
+	
+
 
 
 	// ==========================================================================
