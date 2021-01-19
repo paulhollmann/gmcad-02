@@ -119,7 +119,7 @@ void createCurves()
 	pts.clear();
 
 	// Hyperbel rationale Bezierkurve
-	pts.push_back(Vec3f(-2.0f, 0.0f, 1.0f));
+	pts.push_back(Vec3f(2.0f, 0.0f, 1.0f));
 	pts.push_back(Vec3f(0.0f, 0.0f, 2.0f));
 	pts.push_back(Vec3f(0.0f, -2.0f, 1.0f));
 	bezierCurves.push_back(BezierCurve(pts, true));
