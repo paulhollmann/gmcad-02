@@ -170,19 +170,17 @@ void createCurves()
 
 	// Curve description Circle
 	npts.push_back(Vec4f(-1.0f, 0.5f, -2.0f, 1.0f));
-	npts.push_back(Vec4f(-1.0f, -0.0f, -2.10f, 1.0f));
-	npts.push_back(Vec4f(-1.0f, -0.0f, -2.90f, 1.0f));
+	npts.push_back(Vec4f(-1.0f, -0.1f, -2.5f, 1.0f));
 	npts.push_back(Vec4f(-1.0f, 0.5f, -3.0f, 1.0f));
-	nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0}, 2));
+	nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 1.0, 1.0, 1.0}, 2));
 	//nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.1, 1.0, 1.0, 1.0}, 2));
 	npts.clear();
 
 	// Curve description Circle with different weight
 	npts.push_back(Vec4f(-1.0f, 0.5f, -2.0f, 3.0f));
-	npts.push_back(Vec4f(-1.0f, -0.0f, -2.10f, 2.0f));
-	npts.push_back(Vec4f(-1.0f, -0.0f, -2.90f, 2.0f));
+	npts.push_back(Vec4f(-1.0f, -0.1f, -2.50f, 2.0f));
 	npts.push_back(Vec4f(-1.0f, 0.5f, -3.0f, 3.0f));
-	nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0}, 2));
+	nurbsCurves.push_back(NURBSCurve(npts, std::vector<float>{0.0, 0.0, 0.0, 1.0, 1.0, 1.0}, 2));
 	
 	npts.clear();
 
