@@ -90,14 +90,6 @@ void createCurves()
 
 	std::vector<Vec3f> pts;
 
-	// einfaches Beispiel Bezierkurve
-	pts.push_back(Vec3f(1.0f, 1.0f, 1.0f));
-	pts.push_back(Vec3f(2.0f, 2.0f, 2.0f));
-	pts.push_back(Vec3f(3.0f, 1.0f, 1.0f));
-	pts.push_back(Vec3f(3.0f, 0.0f, 2.0f));
-	bezierCurves.push_back(BezierCurve(pts, false));
-	pts.clear();
-
 	// Parabel quadratische Bezierkurve
 	pts.push_back(Vec3f(1.0f, 0.0f, 0.0f));
 	pts.push_back(Vec3f(0.0f, 0.0f, 0.0f));
@@ -105,36 +97,35 @@ void createCurves()
 	bezierCurves.push_back(BezierCurve(pts, false));
 	pts.clear();
 
-	// Halbkreis rationale Bezierkurve
-	pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
-	pts.push_back(Vec3f(1.0f, 1.0f, 1.0f));
-	pts.push_back(Vec3f(0.0f, 2.0f, 2.0f));
+	// Viertelkreis 2. Grad rationale Bezierkurve
+	pts.push_back(Vec3f(5.0f, 0.0f, 1.0f));
+	pts.push_back(Vec3f(5.0f, 5.0f, 1.0f));
+	pts.push_back(Vec3f(0.0f, 10.0f, 2.0f));
 	bezierCurves.push_back(BezierCurve(pts, true));
 	pts.clear();
 
-	// Viertelkreis 2. Grad rationale Bezierkurve
-	pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
-	pts.push_back(Vec3f(0.0f, 1.0f, 0.0f));
-	pts.push_back(Vec3f(-1.0f, 0.0f, 1.0f));
+	// Halbkreis rationale Bezierkurve
+	pts.push_back(Vec3f(5.0f, 0.0f, 1.0f));
+	pts.push_back(Vec3f(0.0f, 5.0f, 0.0f));
+	pts.push_back(Vec3f(-5.0f, 0.0f, 1.0f));
 	bezierCurves.push_back(BezierCurve(pts, true));
 	pts.clear();
 
 	// Ellipse rationale Bezierkurve
-	pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
+	pts.push_back(Vec3f(2.0f, 0.0f, 1.0f));
 	pts.push_back(Vec3f(0.0f, 0.0f, 0.5f));
-	pts.push_back(Vec3f(0.0f, 1.0f, 1.0f));
+	pts.push_back(Vec3f(0.0f, -2.0f, 1.0f));
 	bezierCurves.push_back(BezierCurve(pts, true));
 	pts.clear();
 
 	// Hyperbel rationale Bezierkurve
-	pts.push_back(Vec3f(1.0f, 0.0f, 1.0f));
+	pts.push_back(Vec3f(-2.0f, 0.0f, 1.0f));
 	pts.push_back(Vec3f(0.0f, 0.0f, 2.0f));
-	pts.push_back(Vec3f(0.0f, 1.0f, 1.0f));
+	pts.push_back(Vec3f(0.0f, -2.0f, 1.0f));
 	bezierCurves.push_back(BezierCurve(pts, true));
 	pts.clear();
 
 	//bezierCurves.clear(); // !!!!
-
 
 	// ==========================================================================
 	for (auto &b : bezierCurves)
