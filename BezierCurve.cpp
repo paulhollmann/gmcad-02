@@ -64,7 +64,7 @@ Vec3f BezierCurve::evaluateCurveAt(const float t, Vec3f &tangent)
 		if (tangentDiff.length() < 0.0001f)
 			tangent = tangentA;
 	} else {
-		Vec3f point = bezierCurveA.getControlPoints().back();
+		point = bezierCurveA.getControlPoints().back();
 		Vec3f pointL = bezierCurveA.getControlPoints().at(bezierCurveA.getControlPoints().size() - 2);
 
 		Vec3f tangentL = point / point.z - pointL / pointL.z;
