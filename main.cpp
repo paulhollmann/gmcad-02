@@ -371,8 +371,8 @@ void coutHelp()
 	// ================================================
 	std::cout << "N: show (N)ext Curve" << std::endl;
 	std::cout << "P: show (P)revious Curve" << std::endl;
-	std::cout << ">: show next Control Polygon" << std::endl;
-	std::cout << "<: show previous Control Polygon" << std::endl;
+	std::cout << ">: show point at next evaluation parameter" << std::endl;
+	std::cout << "<: show point at previous evaluation parameter" << std::endl;
 	std::cout << "S: (S)plit the NURBS curve" << std::endl;
 
 	// ================================================
