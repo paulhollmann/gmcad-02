@@ -369,7 +369,11 @@ void coutHelp()
 	std::cout << "R: (R)eset view" << std::endl;
 	// TODO: update help text according to your changes
 	// ================================================
-
+	std::cout << "N: show (N)ext Curve" << std::endl;
+	std::cout << "P: show (P)revious Curve" << std::endl;
+	std::cout << ">: show next Control Polygon" << std::endl;
+	std::cout << "<: show previous Control Polygon" << std::endl;
+	std::cout << "S: (S)plit the NURBS curve" << std::endl;
 
 	// ================================================
 	std::cout << "==========================" << std::endl;
